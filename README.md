@@ -1,24 +1,45 @@
-# vue3-hook-form
+# @treesoft/vue3-hook-form
+Easy way to control form input, select, checkbox etc. No state or v-model in the component. Vue 3 hook form is simple and lightweight.
 
-## Project setup
-```
-npm install
-```
+### Install
 
-### Compiles and hot-reloads for development
 ```
-npm run serve
+npm i @treesoft/vue3-hook-form
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+### Usage
 
-### Lints and fixes files
 ```
-npm run lint
-```
+<template>
+    <form @submit="handleSubmit($event, onSubmit)">
+        <div>
+            <label>Name</label>
+            <input name="name">
+        </div>
+        <div>
+            <label>Address</label>
+            <textarea name="address">
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</template>
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+<script>
+import useForm from './@treesoft/vue3-hook-form'
+
+export default {
+    setup() {
+        const { handleSubmit } = useForm()
+
+        const onSubmit = (data) => {
+            console.log(data) // { name: '', address: '' }
+        }
+
+        return {
+            handleSubmit,
+            onSubmit,
+        }
+    }
+}
+</script>
+```
