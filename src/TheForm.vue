@@ -31,11 +31,11 @@
 </template>
 
 <script>
-import useHookForm from '../use/hookForm'
+import { useForm } from './form'
 
 export default {
     setup() {
-        const { handleSubmit } = useHookForm()
+        const { handleSubmit } = useForm()
 
         const onSubmit = (data) => {
             console.log(data)

@@ -1,6 +1,6 @@
 import { reactive, onMounted } from 'vue'
 
-const useHookForm = (options = {}) => {
+const useForm = (options = {}) => {
     const { defaultValues = {} } = options
     const formState = reactive(defaultValues);
 
@@ -77,4 +77,6 @@ const useHookForm = (options = {}) => {
     }
 }
 
-export default useHookForm
+export {
+    useForm,
+}
