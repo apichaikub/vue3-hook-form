@@ -1,6 +1,9 @@
 .DS_Store
 node_modules
 /dist
+/public
+babel.config.js
+package-lock.json
 
 
 # local env files
