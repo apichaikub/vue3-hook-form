@@ -1,4 +1,3 @@
-# @treesoft/vue3-hook-form
 Easy way to control form input, select, checkbox etc. No state or v-model in the component. Vue 3 hook form is simple and lightweight.
 
 ### Install
