@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { useForm } from './'
+import useForm from './form'
 
 export default {
     setup() {
