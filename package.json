@@ -1,6 +1,6 @@
 {
   "name": "@treesoft/vue3-hook-form",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Easy way to control form input, select, checkbox etc. No state or v-model in the component. Vue 3 hook form is simple and lightweight.",
   "author": "TreeSoft",
   "license": "MIT",

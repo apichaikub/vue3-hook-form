@@ -104,4 +104,4 @@ setup() {
 
 Web development in 2020 is very interesting and hook is everywhere. 
 
-`@treesoft/vue3-hook-form` make the component clean up and strongly code structure. No state, No v-model but only one for `onSubmit` handle function. If you want to contribution with us don't be hesitate, create the pull request on [Github](https://github.com/apichaikub/vue3-hook-form) now 🚀🚀🚀
+[@treesoft/vue3-hook-form](https://www.npmjs.com/package/@treesoft/vue3-hook-form) make the component clean up and strongly code structure. No state, No v-model but only one for `onSubmit` handle function. If you want to contribution with us don't be hesitate, create the pull request on [Github](https://github.com/apichaikub/vue3-hook-form) now 🚀🚀🚀
