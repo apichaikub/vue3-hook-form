@@ -55,14 +55,14 @@ export default {
 |                                         | `callback`          | Callback function when the form was submitedd.
 | `formState: object`                     |                     | Form reactive or state values, can be render in the template.
 
-### Set the form value after called service api
-
 ## APIs options
 
 | Name                                    | Params                         | Description    |
 | :---------------------------------------|:------------------------------:|----------------|:-----------|
 | `useForm(options: object)`              |                                | options
-|                                         | `options.defaultValue: object` | form values to set by default: `{ name: 'Vue.js' }`
+|                                         | `options.defaultValue: object` | form values to set by default
+
+### Set the form value after called service api
 
 ```
 setup() {
