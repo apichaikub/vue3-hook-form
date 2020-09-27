@@ -3,45 +3,49 @@
         <div>
             <label>Email</label>
             <input name="email">
+            {{ errors.email && 'Email is required.' }}
         </div>
         <div>
             <label>Password</label>
             <input name="password">
-        </div>
-        <div>
-            <label>Type</label>
-            <select name="type">
-                <option value="">
-                    --- select ---
-                </option>
-                <option value="admin">
-                    Admin
-                </option>
-                <option value="user">
-                    User
-                </option>
-            </select>
-        </div>
-        <div>
-            <label>Remember me</label>
-            <input type="checkbox" name="remember">
+            {{ errors.password && 'Password is required.' }}
         </div>
         <button type="submit">Login</button>
     </form>
 </template>
 
 <script>
-import useForm from './form'
+import useForm from '../use/form'
+
+const required = (value) => {
+    return value ? true : false
+}
+
+const minLength = (length) => (value) => {
+    return required(value) || String(value).length >= length
+}
 
 export default {
     setup() {
-        const { handleSubmit } = useForm()
+        const options = {
+            validate: {
+                email: {
+                    required,
+                },
+                password: {
+                    minLength: minLength(8)
+                }
+            },
+        }
+
+        const { errors, handleSubmit } = useForm(options)
 
         const onSubmit = (data) => {
             console.log(data)
         }
 
         return {
+            errors,
             handleSubmit,
             onSubmit,
         }

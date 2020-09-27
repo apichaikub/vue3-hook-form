@@ -1449,7 +1449,7 @@ var web_dom_collections_for_each = __webpack_require__("159b");
 // EXTERNAL MODULE: external {"commonjs":"vue","commonjs2":"vue","root":"Vue"}
 var external_commonjs_vue_commonjs2_vue_root_Vue_ = __webpack_require__("8bbf");
 
-// CONCATENATED MODULE: ./src/form.js
+// CONCATENATED MODULE: ./src/use/form.js
 
 
 
@@ -1458,8 +1458,11 @@ var external_commonjs_vue_commonjs2_vue_root_Vue_ = __webpack_require__("8bbf");
 var form_useForm = function useForm() {
   var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var _options$defaultValue = options.defaultValues,
-      defaultValues = _options$defaultValue === void 0 ? {} : _options$defaultValue;
-  var formState = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["reactive"])(defaultValues);
+      defaultValues = _options$defaultValue === void 0 ? {} : _options$defaultValue,
+      _options$validate = options.validate,
+      validate = _options$validate === void 0 ? {} : _options$validate;
+  var values = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["reactive"])(defaultValues);
+  var errors = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["reactive"])({});
   Object(external_commonjs_vue_commonjs2_vue_root_Vue_["onMounted"])(function () {
     var isSetDefaultValues = Object.keys(defaultValues).length;
 
@@ -1468,23 +1471,38 @@ var form_useForm = function useForm() {
     }
   });
 
-  var setFormState = function setFormState(name, value) {
-    formState[name] = value;
+  var setFormValue = function setFormValue(name, value) {
+    values[name] = value;
   };
 
-  var setValue = function setValue(name, value) {
-    if (typeof name === 'string' && (typeof value === 'string' || typeof value === 'number')) {
-      setFormState(name, value);
-      setElementValue(name, value);
-    }
+  var setErrors = function setErrors(name, value) {
+    errors[name] = value;
   };
 
   var setElementValue = function setElementValue(name, value) {
     var element = document.querySelector("[name='".concat(name, "']"));
 
     if (element) {
-      element.value = value;
+      var attrTypeValue = getAttributeValue(element)('type');
+
+      if (attrTypeValue === 'checkbox') {
+        element.checked = value;
+      } else {
+        element.value = value;
+      }
     }
+  };
+
+  var getElementValue = function getElementValue(element) {
+    return function (value) {
+      var type = element.getAttribute(value);
+
+      if (type === 'checkbox') {
+        return element.checked;
+      }
+
+      return element.value;
+    };
   };
 
   var setDefaultValues = function setDefaultValues() {
@@ -1496,18 +1514,17 @@ var form_useForm = function useForm() {
     });
   };
 
-  var getElementValue = function getElementValue(element) {
-    var type = element.getAttribute('type');
-
-    if (type === 'checkbox') {
-      return element.checked;
-    }
-
-    return element.value;
+  var getAttributeValue = function getAttributeValue(element) {
+    return function (value) {
+      return element.getAttribute(value);
+    };
   };
 
-  var getAttributeValue = function getAttributeValue(element) {
-    return element.getAttribute('name');
+  var setValue = function setValue(name, value) {
+    if (typeof name === 'string' && (typeof value === 'string' || typeof value === 'number')) {
+      setFormValue(name, value);
+      setElementValue(name, value);
+    }
   };
 
   var handleSubmit = function handleSubmit(event, callback) {
@@ -1515,30 +1532,55 @@ var form_useForm = function useForm() {
       return;
     }
 
-    event.target.querySelectorAll("[name]").forEach(function (element) {
-      var name = getAttributeValue(element);
-      var value = getElementValue(element);
-      setFormState(name, value);
+    var elements = event.target.querySelectorAll("[name]") || [];
+    elements.forEach(function (element) {
+      var attrNameValue = getAttributeValue(element)('name');
+      var eleValue = getElementValue(element)('type');
+      setFormValue(attrNameValue, eleValue);
+      var hasValidate = validate[attrNameValue];
+
+      if (hasValidate) {
+        var validateProps = validate[attrNameValue] || {};
+        var propertyKeys = Object.keys(validateProps);
+        var errorProps = {};
+        propertyKeys.forEach(function (key) {
+          var validateFunc = validateProps[key];
+          var isValid = validateFunc(eleValue);
+          var isError = !isValid;
+
+          if (isError) {
+            errorProps[key] = isError;
+          }
+        });
+        var hasErrors = Object.keys(errorProps).length;
+
+        if (hasErrors) {
+          setErrors(attrNameValue, errorProps);
+        } else {
+          setErrors(attrNameValue, null);
+        }
+      }
     });
 
     if (callback) {
-      callback(formState);
+      callback(values);
     }
 
     event.preventDefault();
   };
 
   return {
-    formState: formState,
+    values: values,
+    errors: errors,
     setValue: setValue,
     handleSubmit: handleSubmit
   };
 };
 
-/* harmony default export */ var src_form = (form_useForm);
+/* harmony default export */ var use_form = (form_useForm);
 // CONCATENATED MODULE: ./src/index.js
 
-/* harmony default export */ var src_0 = (src_form);
+/* harmony default export */ var src_0 = (use_form);
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/entry-lib.js
 
 

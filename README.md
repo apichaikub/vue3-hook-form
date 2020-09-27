@@ -1,4 +1,4 @@
-Easy way to handle submitting the form input, select, checkbox, textarea etc. No state or v-model in the component, just give the attribute name to it. Vue 3 hook form is simpler and faster.
+Easy way to handle submit and validate form. No state, No two way binding or v-model in the component, just give the attribute name on the input elements. Vue 3 hook form is simpler and faster.
 
 ## Install
 
@@ -6,19 +6,13 @@ Easy way to handle submitting the form input, select, checkbox, textarea etc. No
 npm i @treesoft/vue3-hook-form
 ```
 
-## Usage
+## Usage basic
 
 ```
 <template>
     <form @submit="handleSubmit($event, onSubmit)">
-        <div>
-            <label>Name</label>
-            <input name="name">
-        </div>
-        <div>
-            <label>Address</label>
-            <textarea name="address">
-        </div>
+        <input name="name">
+        <textarea name="address">
         <button type="submit">Submit</button>
     </form>
 </template>
@@ -45,24 +39,26 @@ export default {
 
 ## APIs methods
 
-| Name                                    | Params                | Description    |
-| :---------------------------------------|:-------------------:|----------------|:-----------|
-| `setValue(name: string, value: string)` |                     | Set element value such as: input, textarea, select, etc.
-|                                         | `name`              | Attributes name value of element.
-|                                         | `value`             | Value to be change.
-| `handleSubmit(event: object, callback: function)` |                     | Hanler function when form is submitted.
-|                                         | `event`             | EventListener interface represents an object that can handle .an event dispatched by an EventTarget object.
-|                                         | `callback`          | Callback function when the form was submitedd.
-| `formState: object`                     |                     | Form reactive or state values, can be render in the template.
+| Name                                    | Params              | Description    |
+| :---------------------------------------|:-------------------:|----------------|
+| `setValue(name: string, value: string)` |                     | set element value such as: input, textarea, select, etc.
+|                                         | `name`              | attributes name value of element.
+|                                         | `value`             | value to be change.
+| `handleSubmit(event: object, callback: function)` |           | hanler function when form is submitted.
+|                                         | `event`             | eventListener interface represents an object that can handle .an event dispatched by an EventTarget object.
+|                                         | `callback`          | callback function when the form was submitedd.
+| `values: object`                        |                     | form state values, can be render in the template.
+| `errors: object`                        |                     | error state, can be render in the template.
 
 ## APIs options
 
 | Name                                    | Params                         | Description    |
-| :---------------------------------------|:------------------------------:|----------------|:-----------|
+| :---------------------------------------|:------------------------------:|----------------|
 | `useForm(options: object)`              |                                | options
 |                                         | `options.defaultValue: object` | form values to set by default
+|                                         | `options.validate: object`     | form validation such as: email, password and ect.
 
-### Set the form value after called service api
+### set form value after called service api
 
 ```
 setup() {
@@ -87,7 +83,7 @@ setup() {
 }
 ```
 
-### Or set form value by default
+### set form value by default
 
 ```
 setup() {
@@ -112,6 +108,35 @@ setup() {
 }
 ```
 
-Web development in 2020 is very interesting and the concept of hook is trending. developers apply this concept to everywhere, even form control.
+### validation form
 
-[@treesoft/vue3-hook-form](https://www.npmjs.com/package/@treesoft/vue3-hook-form) make the component clean up and strongly code structure. No state, No v-model but only one for `onSubmit` handle function. If you want to contribution with us don't be hesitate, create the pull request on [Github](https://github.com/apichaikub/vue3-hook-form) now 🚀🚀🚀
+```
+setup() {
+    const options = {
+        validate: {
+            email: {
+                required,
+            },
+            password: {
+                minLength: minLength(8)
+            }
+        },
+    }
+
+    const { errors, handleSubmit } = useForm(options)
+
+    const onSubmit = (data) => {
+        console.log(data)
+    }
+
+    return {
+        errors,
+        handleSubmit,
+        onSubmit,
+    }
+}
+```
+
+Web development in 2020 is very interesting and the hook form is trending now on react but not for vue now. 
+
+So, I have created the [@treesoft/vue3-hook-form](https://www.npmjs.com/package/@treesoft/vue3-hook-form) to make the component clean up and strongly code structure. No state, No two way binding or v-model but only one for `onSubmit` callback function. If you want to contribution with us don't be hesitate, create the pull request on [Github](https://github.com/apichaikub/vue3-hook-form) to make vue comunnity stronger 🚀🚀🚀
