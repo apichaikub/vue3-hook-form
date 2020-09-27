@@ -1,6 +1,6 @@
 {
   "name": "@treesoft/vue3-hook-form",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Easy way to handle submit and validate form. No state, No two way binding or v-model in the component, just give the attribute name on the input elements. Vue 3 hook form is simpler and faster.",
   "author": "TreeSoft",
   "license": "MIT",

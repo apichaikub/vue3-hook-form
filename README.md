@@ -58,7 +58,7 @@ export default {
 |                                         | `options.defaultValue: object` | form values to set by default
 |                                         | `options.validate: object`     | form validation such as: email, password and ect.
 
-### set form value after called service api
+### Set form value after called service api
 
 ```
 setup() {
@@ -83,7 +83,7 @@ setup() {
 }
 ```
 
-### set form value by default
+### Set form value by default
 
 ```
 setup() {
@@ -108,7 +108,7 @@ setup() {
 }
 ```
 
-### validation form
+### Validation form
 
 ```
 setup() {
